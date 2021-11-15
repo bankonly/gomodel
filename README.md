@@ -1,1 +1,1 @@
-# gomodel
+# gomodel for ms

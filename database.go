@@ -3,14 +3,19 @@ package gomodel
 import (
 	"context"
 	"log"
+	"os"
 	"time"
 
+	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func Mongo(uri string) (*mongo.Client, context.Context, context.CancelFunc) {
-	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
+func Mongo() (*mongo.Client, context.Context, context.CancelFunc) {
+	godotenv.Load(".env")
+	mongoURI := os.Getenv("DATABASE_URI")
+
+	client, err := mongo.NewClient(options.Client().ApplyURI(mongoURI))
 	if err != nil {
 		log.Fatal(err)
 	}

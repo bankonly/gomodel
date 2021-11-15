@@ -3,15 +3,15 @@ package gomodel
 import (
 	"context"
 	"log"
+	"os"
 	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func Mongo(uri string) (*mongo.Client, context.Context, context.CancelFunc) {
-
-	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
+func Mongo() (*mongo.Client, context.Context, context.CancelFunc) {
+	client, err := mongo.NewClient(options.Client().ApplyURI(os.Getenv("DATABASE_URI")))
 	if err != nil {
 		log.Fatal(err)
 	}

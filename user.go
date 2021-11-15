@@ -1,4 +1,4 @@
-package tiptrickmodel
+package gomodel
 
 type LoginSchema struct {
 	Username string `json:"username"`

@@ -16,14 +16,10 @@ type User struct {
 	DeletedAt time.Time          `bson:"deletedAt,omitempty"`
 }
 
-func UserModel(username, email, password string) *User {
-	u := User{}
-	u.Username = username
-	u.Email = email
-	u.Password = password
+func UserModel(u *User) *User {
 	u.CreatedAt = time.Now().UTC()
 	u.UpdatedAt = time.Now().UTC()
-	return &u
+	return u
 }
 
 // Update field

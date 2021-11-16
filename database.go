@@ -21,7 +21,6 @@ func MongoInstance() (*mongo.Database, *mongo.Client, context.Context) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer client.Disconnect(ctx)
 	err = client.Ping(ctx, readpref.Primary())
 	if err != nil {
 		log.Fatal(err)

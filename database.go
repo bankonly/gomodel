@@ -12,11 +12,9 @@ import (
 
 var client *mongo.Client
 var instance *mongo.Database
-var ctx context.Context
-var cancel context.CancelFunc
 var mongoOnce sync.Once
 
-func MongoInstance() (*mongo.Database, context.Context, *mongo.Client, context.CancelFunc) {
+func MongoInstance() (*mongo.Database, *mongo.Client) {
 	mongoOnce.Do(func() {
 		clientOption := options.Client().ApplyURI(os.Getenv("DATABASE_URI"))
 		client, err := mongo.Connect(context.TODO(), clientOption)
@@ -32,5 +30,5 @@ func MongoInstance() (*mongo.Database, context.Context, *mongo.Client, context.C
 		instance = client.Database(os.Getenv("DATABASE_NAME"))
 	})
 
-	return instance, ctx, client, cancel
+	return instance, client
 }

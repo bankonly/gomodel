@@ -19,12 +19,12 @@ func MongoInstance() (*mongo.Database, *mongo.Client, context.Context) {
 	mongoOnce.Do(func() {
 		ctx = context.TODO()
 		clientOption := options.Client().ApplyURI(os.Getenv("DATABASE_URI"))
-		client, err := mongo.Connect(context.TODO(), clientOption)
+		client, err := mongo.Connect(ctx, clientOption)
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		err = client.Ping(context.TODO(), nil)
+		err = client.Ping(ctx, nil)
 		if err != nil {
 			log.Fatal(err)
 		}

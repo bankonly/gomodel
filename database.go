@@ -10,7 +10,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func Mongo() (*mongo.Client, context.Context, context.CancelFunc) {
+func MongoInstance() (*mongo.Client, context.Context, context.CancelFunc) {
 	client, err := mongo.NewClient(options.Client().ApplyURI(os.Getenv("DATABASE_URI")))
 	if err != nil {
 		log.Fatal(err)
@@ -24,4 +24,16 @@ func Mongo() (*mongo.Client, context.Context, context.CancelFunc) {
 	}
 
 	return client, ctx, cancel
+}
+
+func MongoWithDBName(database string) (*mongo.Client, context.Context, context.CancelFunc) {
+	client, ctx, cancel := MongoInstance()
+	client.Database(database)
+	return client, ctx, cancel
+}
+
+func Mongo() (*mongo.Database, *mongo.Client, context.Context, context.CancelFunc) {
+	client, ctx, cancel := MongoInstance()
+	instance := client.Database(os.Getenv("DATABASE_NAME"))
+	return instance, client, ctx, cancel
 }

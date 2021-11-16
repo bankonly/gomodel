@@ -7,13 +7,13 @@ import (
 )
 
 type User struct {
-	ID        primitive.ObjectID `bson:"_id,omitempty"`
-	Username  string             `bson:"username" validate:"required"`
-	Email     string             `bson:"email" validate:"required"`
-	Password  string             `bson:"password" validate:"required"`
-	CreatedAt time.Time          `bson:"createdAt"`
-	UpdatedAt time.Time          `bson:"updatedAt"`
-	DeletedAt time.Time          `bson:"deletedAt,omitempty"`
+	ID        primitive.ObjectID `bson:"_id,omitempty" json:"_id"`
+	Username  string             `bson:"username" json:"username" validate:"required"`
+	Email     string             `bson:"email" json:"email" validate:"required"`
+	Password  string             `bson:"password" json:"password" validate:"required"`
+	CreatedAt time.Time          `bson:"createdAt" json:"createdAt"`
+	UpdatedAt time.Time          `bson:"updatedAt" json:"updatedAt"`
+	DeletedAt time.Time          `bson:"deletedAt,omitempty" json:"deletedAt"`
 }
 
 func UserModel(u *User) *User {

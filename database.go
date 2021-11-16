@@ -17,7 +17,7 @@ var ctx context.Context
 var cancel context.CancelFunc
 var mongoOnce sync.Once
 
-func MongoInstance() (*mongo.Database, *mongo.Client, context.Context, context.CancelFunc) {
+func MongoInstance() (*mongo.Database, context.Context, *mongo.Client, context.CancelFunc) {
 	mongoOnce.Do(func() {
 		client, err := mongo.NewClient(options.Client().ApplyURI(os.Getenv("DATABASE_URI")))
 		if err != nil {
@@ -34,5 +34,5 @@ func MongoInstance() (*mongo.Database, *mongo.Client, context.Context, context.C
 		instance = client.Database(os.Getenv("DATABASE_NAME"))
 	})
 
-	return instance, client, ctx, cancel
+	return instance, ctx, client, cancel
 }

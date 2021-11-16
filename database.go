@@ -9,6 +9,8 @@ import (
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/mongo/options/readpref"
+	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
 var client *mongo.Client
@@ -20,8 +22,12 @@ func MongoInstance() (*mongo.Database, *mongo.Client, context.Context) {
 	ctx := context.TODO()
 	mongoOnce.Do(func() {
 		fmt.Println("CONNECTED AGAIN")
-		clientOption := options.Client().ApplyURI(os.Getenv("DATABASE_URI"))
-		client, err := mongo.Connect(ctx, clientOption)
+
+		op := options.Client()
+		dbURI := op.ApplyURI(os.Getenv("DATABASE_URI"))
+		readPref := op.SetReadPreference(readpref.Primary())
+
+		client, err := mongo.Connect(ctx, dbURI, readPref)
 		if err != nil {
 			log.Fatal(err)
 		}

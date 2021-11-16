@@ -1,14 +1,19 @@
 package gomodel
 
-import "time"
+import (
+	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 type User struct {
-	Username  string    `json:"username"`
-	Email     string    `json:"email"`
-	Password  string    `json:"password"`
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
-	DeletedAt bool      `json:"deletedAt"`
+	ID        primitive.ObjectID `bson:"_id,omitempty"`
+	Username  string             `bson:"username,omitempty"`
+	Email     string             `bson:"email,omitempty"`
+	Password  string             `bson:"password,omitempty"`
+	CreatedAt time.Time          `bson:"createdAt,omitempty"`
+	UpdatedAt time.Time          `bson:"updatedAt,omitempty"`
+	DeletedAt time.Time          `bson:"deletedAt,omitempty"`
 }
 
 func UserModel(username, email, password string) *User {
@@ -18,7 +23,6 @@ func UserModel(username, email, password string) *User {
 	u.Password = password
 	u.CreatedAt = time.Now().UTC()
 	u.UpdatedAt = time.Now().UTC()
-	u.DeletedAt = false
 	return &u
 }
 
